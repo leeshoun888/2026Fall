@@ -109,8 +109,8 @@ def overlays():
 def main():
     draft = "--draft" in sys.argv
     if "--origami" in sys.argv:
-        # 종이접기 버전: 첫 프레임을 종이접기로 바꾼 Kling std 컷 + 작업실 장면은 Origami 프리셋 결과
-        clips = ["../origami/o1", "../origami/o2", "../origami/o3_preset", "../origami/o4", "../origami/o5", "../origami/o6", "../origami/o7"]
+        # 종이접기 버전: 첫 프레임을 종이접기로 바꾼 Kling std 컷 7개
+        clips = ["../origami/o1", "../origami/o2", "../origami/o3", "../origami/o4", "../origami/o5", "../origami/o6", "../origami/o7"]
     else:
         clips = [c + "r" if (ROOT / f"film/clips/{c}r.mp4").exists() else c for c in CLIPS]
     end_png = ROOT / "film/edit/endcard.jpg"

@@ -343,7 +343,7 @@ ul{margin:0;padding-left:4.5mm} li{font-size:10pt;line-height:1.6;margin-bottom:
   <table><tr><th style="width:24%">단계</th><th>도구와 방법</th></tr>
     <tr><td>실제 인물</td><td>보라말 형제는 이소운·이시운 본인 사진 3장을 참조로 넣어 실제 얼굴을 살리고 옷만 브랜드 색(보라 계열)으로 바꾼 기준 이미지를 먼저 만든 뒤, 종이 인형이 되어도 알아볼 수 있게 장면마다 다시 참조</td></tr>
     <tr><td>장면 첫 프레임</td><td>Higgsfield GPT Image 2.5(2K, 16:9)로 실사 장면 7장을 먼저 만들고, 같은 구도를 유지한 채 종이접기 디오라마 질감으로 다시 그림. 화면 속 글자는 AI가 깨뜨리기 쉬워 편집에서 대화 UI를 얹음</td></tr>
-    <tr><td>영상 생성</td><td>Higgsfield Kling 3.0 이미지→영상, 컷당 10초 × 6(종이 스톱모션 움직임과 카메라 이동을 컷마다 지정). 작업실 장면은 Higgsfield Origami 프리셋으로 실사 영상을 종이접기로 변환(8fps). 소리는 끄고 크레딧 절약</td></tr>
+    <tr><td>영상 생성</td><td>Higgsfield Kling 3.0 이미지→영상, 컷당 10초 × 7(종이 인형의 움직임과 카메라 이동을 컷마다 지정). 영상 변환 프리셋(Origami)도 시험했지만 8fps로 끊겨 보여 모든 장면을 같은 방식으로 통일. 소리는 끄고 크레딧 절약</td></tr>
     <tr><td>편집</td><td>ffmpeg로 0.5초 교차 전환, 제목·자막·대화 UI·단계 라벨 오버레이, 모션그래픽과 같은 엔딩 카드</td></tr>
     <tr><td>음향</td><td>ElevenLabs 나레이션(여성, 7문장) + Mixkit 'A New Life'(조용히 시작해 커지는 곡을 이야기의 전환점에 맞춤) + 덕킹</td></tr></table>
   <p class="small" style="margin-top:3mm">소스: film/keyframes/prompts.tsv, film/motion.tsv, tools/film_edit.py. 사용 크레딧은 README에 기록.</p>

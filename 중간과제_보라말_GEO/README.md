@@ -54,7 +54,7 @@ node tools/render.mjs video --audio audio/motion_mix.wav --out deliverables/1_�
 python3 tools/film_edit.py                                       # AI 영화 편집(클립 + 자막 + 대화 UI + 엔딩)
 ```
 
-AI 영화 생성(Higgsfield): 종이접기 질감. 실사 첫 프레임(GPT Image 2.5)을 같은 구도의 종이접기 디오라마로 다시 그리고(`film/origami/frames.sh`), Kling 3.0 std 이미지→영상 10초 × 6, 작업실 장면은 Origami 프리셋(8fps, 1k)으로 변환. 편집은 `python3 tools/film_edit.py --origami`. 처음 만든 실사풍 버전은 로컬 `film/alt/`에 보관. 프롬프트는 `film/keyframes/prompts.tsv`, `film/motion.tsv`, `film/motion_real.tsv`, `film/regen_real.sh`. 보라말 형제 장면은 본인 사진을 참조해 다시 만들었고(옷만 보라 계열로 변경), 사용 크레딧은 실사풍 버전 약 272, 종이접기 버전 약 284(Origami 프리셋 시험 160 포함)입니다.
+AI 영화 생성(Higgsfield): 종이접기 질감. 실사 첫 프레임(GPT Image 2.5)을 같은 구도의 종이접기 디오라마로 다시 그리고(`film/origami/frames.sh`), Kling 3.0 std 이미지→영상 10초 × 7(Origami 영상 변환 프리셋도 시험했으나 8fps로 끊겨 교체). 편집은 `python3 tools/film_edit.py --origami`. 처음 만든 실사풍 버전은 로컬 `film/alt/`에 보관. 프롬프트는 `film/keyframes/prompts.tsv`, `film/motion.tsv`, `film/motion_real.tsv`, `film/regen_real.sh`. 보라말 형제 장면은 본인 사진을 참조해 다시 만들었고(옷만 보라 계열로 변경), 사용 크레딧은 실사풍 버전 약 272, 종이접기 버전 약 302(Origami 프리셋 시험 160 포함)입니다.
 
 ## 출처와 라이선스
 
