@@ -1,0 +1,13 @@
+cd ~/Documents/boramal-geo-midterm-2026/film
+STYLE="Restyle this exact scene as a handcrafted origami papercraft diorama: every person, object, wall and prop is made of crisp folded colored paper with visible sharp creases, faceted geometric paper planes and subtle paper fiber texture, like a stop-motion paper puppet film set. Keep the same composition, camera angle, characters, poses and lighting mood. Cinematic lighting, shallow depth of field, no text."
+REAL="--image-references keyframes/char_real.png --image-references real_photos/ref_both_1.jpg"
+gen() { id=$1; src=$2; extra=$3; shift 3
+  higgsfield generate create gpt_image_2_5 --prompt "$STYLE $*" --image-references keyframes/$src.png $extra --aspect_ratio 16:9 --resolution 2k --quality high --wait --wait-timeout 15m --json > origami/$id.json 2>&1
+  curl -s -o origami/$id.png "$(python3 -c "import json;print(json.load(open('origami/$id.json'))[0]['result_url'])")" && sips -Z 1000 origami/$id.png --out origami/${id}_prev.jpg -s format jpeg >/dev/null; }
+gen o2 k2 "" "Scene: a marketing manager in a blazer in an evening office frowning at a large monitor showing a product page made only of colorful paper picture panels, paper city lights through the glass." &
+gen o3 k3r "$REAL" "Scene: the two Korean brothers from the reference photos as paper puppets that keep their recognizable faces: older brother with clear thin-rimmed glasses in a deep violet-navy shirt points at a paper monitor of data tables, younger brother in a lavender-purple hoodie types on a paper keyboard, purple lamp light." &
+gen o4 k4 "" "Scene: macro shot of a folded paper nutrition label, a purple light line scanning across it while tiny folded paper numbers and letters lift off and fly toward the camera." &
+gen o5 k5 "" "Scene: a vast paper world at night where streams of folded paper cards fly from a paper archive building and from a wall of paper product pictures, merging into a bright floating paper website panel, tiny paper comets flying toward it, paper light rays." &
+gen o6 k6 "" "Scene: morning kitchen, the young mother smiling with relief at her phone next to her giggling baby in a high chair, a can of formula on the table, warm golden paper sunlight." &
+gen o7 k7r "$REAL" "Scene: the two Korean brothers from the reference photos as paper puppets that keep their recognizable faces, older brother with clear thin-rimmed glasses in a deep violet-navy shirt and younger brother in a lavender-purple hoodie, smiling on a paper rooftop at sunrise over a folded paper Seoul skyline with a paper Lotte tower and paper river, purple and orange paper sky." &
+wait; echo done

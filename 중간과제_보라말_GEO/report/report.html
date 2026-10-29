@@ -1,0 +1,376 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8">
+<title>보라말 GEO 구독 서비스 사업계획서</title>
+<style>
+@font-face{font-family:P;font-weight:500;src:url(../assets/fonts/Pretendard-SemiBold.otf)}
+@font-face{font-family:P;font-weight:700;src:url(../assets/fonts/Pretendard-Bold.otf)}
+@font-face{font-family:P;font-weight:800;src:url(../assets/fonts/Pretendard-ExtraBold.otf)}
+@font-face{font-family:P;font-weight:900;src:url(../assets/fonts/Pretendard-Black.otf)}
+@page{size:A4;margin:0}
+:root{--ink:#1a1533;--sub:#5d5785;--dim:#8c87ab;--vio:#7b5cff;--vio2:#efeaff;--deep:#0d0a1c;--mint:#13a37a;--red:#e0475b;--line:#e4e0f3}
+*{box-sizing:border-box}
+body{margin:0;font-family:P,sans-serif;font-weight:500;color:var(--ink);-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.page{width:210mm;height:297mm;padding:20mm 18mm 16mm;position:relative;overflow:hidden;page-break-after:always;background:#fff}
+.page:last-child{page-break-after:auto}
+.hd{position:absolute;top:9mm;left:18mm;right:18mm;display:flex;justify-content:space-between;font-size:8.5pt;color:var(--dim);font-weight:700}
+.ft{position:absolute;bottom:8mm;left:18mm;right:18mm;display:flex;justify-content:space-between;font-size:8pt;color:var(--dim)}
+.no{font-size:11pt;font-weight:900;color:var(--vio);letter-spacing:.5px}
+h1{font-size:25pt;font-weight:900;line-height:1.28;margin:2mm 0 4mm;letter-spacing:-.3px}
+h1 em{font-style:normal;color:var(--vio)}
+h2{font-size:14pt;font-weight:900;margin:6mm 0 2.5mm}
+h3{font-size:11.5pt;font-weight:800;margin:0 0 1.5mm}
+p{font-size:10.5pt;line-height:1.65;margin:0 0 3mm}
+.lead{font-size:12pt;line-height:1.6;color:var(--sub);font-weight:700}
+.small{font-size:8.5pt;color:var(--dim);line-height:1.5}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:5mm}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:4mm}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:3.5mm}
+.card{border:1.2px solid var(--line);border-radius:4mm;padding:5mm;background:#fff}
+.card.v{background:var(--vio2);border-color:#d8cfff}
+.card.d{background:var(--deep);border-color:var(--deep);color:#fff}
+.card p{font-size:9.8pt;margin:0}
+.big{font-size:40pt;font-weight:900;line-height:1;letter-spacing:-1px}
+.big.v{color:var(--vio)} .big.r{color:var(--red)} .big.m{color:var(--mint)}
+.lbl{font-size:9pt;font-weight:800;color:var(--vio);margin-bottom:1.5mm;letter-spacing:.3px}
+.tag{display:inline-block;font-size:8.5pt;font-weight:800;padding:1mm 3mm;border-radius:10mm;background:var(--vio2);color:var(--vio);margin-right:1.5mm}
+table{width:100%;border-collapse:collapse;font-size:9.6pt}
+th,td{padding:2.4mm 2.5mm;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;line-height:1.45}
+th{font-weight:800;color:var(--sub);background:#faf8ff}
+td.r,th.r{text-align:right}
+img{display:block;max-width:100%}
+.shot{border-radius:3mm;width:100%}
+.flow{display:flex;align-items:stretch;gap:2mm}
+.flow .card{flex:1}
+.arrow{display:flex;align-items:center;color:var(--vio);font-weight:900;font-size:16pt}
+.bar{height:9mm;border-radius:2mm;background:#ece8fa;position:relative;margin:1.5mm 0 3mm}
+.bar i{position:absolute;left:0;top:0;bottom:0;border-radius:2mm;background:var(--vio)}
+.bar b{position:absolute;left:2.5mm;color:#fff;top:50%;transform:translateY(-50%);font-size:11pt;font-weight:900}
+ul{margin:0;padding-left:4.5mm} li{font-size:10pt;line-height:1.6;margin-bottom:1mm}
+.cap{font-size:8.5pt;color:var(--sub);margin-top:1.5mm;line-height:1.4}
+/* 표지 */
+.cover{background:var(--deep);color:#fff;padding:0}
+.cover .bg{position:absolute;inset:0;background:radial-gradient(circle at 78% 18%,rgba(123,92,255,.55),transparent 55%),radial-gradient(circle at 10% 95%,rgba(19,163,122,.22),transparent 45%)}
+.cover .in{position:absolute;left:20mm;right:20mm;top:52mm}
+.cover h1{font-size:40pt;line-height:1.2;margin:6mm 0}
+.cover .meta{position:absolute;left:20mm;bottom:22mm;font-size:10pt;line-height:1.8;color:#cfc8f5}
+</style></head><body>
+
+<!-- 1. 표지 -->
+<section class="page cover"><div class="bg"></div>
+  <div class="in">
+    <svg width="74" height="74" viewBox="-55 -55 110 110"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#a58bff"/><stop offset="1" stop-color="#6a45f0"/></linearGradient></defs>
+      <path d="M-34-46H34Q50-46 50-30V18Q50 34 34 34H-6L-26 52-22 34H-34Q-50 34-50 18V-30Q-50-46-34-46Z" fill="url(#lg)"/>
+      <path d="M-20 22L-16-8Q-12-28 6-32L10-40 14-30Q30-24 34-6Q36 2 28 4Q16 2 10-4Q6 8 10 22Z" fill="#fff"/><circle cx="18" cy="-16" r="3" fill="#6a45f0"/></svg>
+    <div style="font-size:13pt;font-weight:800;color:#b8a4ff;margin-top:8mm">보라말 GEO 구독 서비스 사업계획서</div>
+    <h1>AI가 읽어야,<br>선택됩니다</h1>
+    <p style="font-size:13pt;color:#e6e1ff;line-height:1.7;font-weight:700">이미지 속에 갇힌 식품 제품 정보를 꺼내<br>AI 전용 공식 제품정보 사이트로 발행하고 매달 관리합니다</p>
+  </div>
+  <div class="meta">영어음성학응용 중간고사 프로젝트 · 사업 구상 보고서<br>팀 보라말 · 이소운 (형 이시운과 공동 창업)<br>2026년 10월 · 제출물: 모션그래픽 1분 11초 · AI 영화 1분 10초 · 이 보고서</div>
+</section>
+
+<!-- 2. 한 장 요약 -->
+<section class="page"><div class="hd"><span>보라말 GEO 구독 서비스</span><span>한 장 요약</span></div>
+  <div class="no">SUMMARY</div>
+  <h1>소비자는 AI에게 묻는데,<br>AI는 <em>우리 제품을 읽지 못합니다</em></h1>
+  <p class="lead">식품 회사의 영양성분·원재료·알레르기 정보는 대부분 자사몰 상세페이지의 이미지 안에 있습니다. 사람 눈에는 보이지만 AI가 읽어 가는 글자로는 비어 있습니다. 보라말은 이 정보를 꺼내 AI가 읽고 인용하기 좋은 공식 제품정보 사이트로 만들어 줍니다.</p>
+  <div class="grid2" style="margin-top:6mm">
+    <div class="card"><div class="lbl">왜 (문제)</div><div class="big r">0 / 51</div><p style="margin-top:2mm">보라말이 점검한 식품 회사 17곳의 제품 페이지 51개 중 영양성분표가 본문 글자로 있는 곳</p></div>
+    <div class="card v"><div class="lbl">무엇을 (해법)</div><h3 style="font-size:14pt">네 단계 파이프라인</h3><p>공공 식품영양성분 DB 수집 → AI 이미지 분석 → GEO 가공 → AI 전용 제품정보 사이트 발행</p></div>
+    <div class="card"><div class="lbl">근거 (검증된 사례)</div><div class="big v">21→99%</div><p style="margin-top:2mm">매일유업 공식 제품 가이드(productguide.maeil.com)를 AI에 넣었을 때 제품 사실 정답률(보라말 시험)</p></div>
+    <div class="card d"><div class="lbl" style="color:#b8a4ff">돈 (수익 모델)</div><div class="big" style="color:#fff;font-size:30pt">월 450만 원<span style="font-size:14pt;color:#cfc8f5"> 부터</span></div><p style="margin-top:2mm;color:#d9d3fb">무료 AI 성적표 → 90일 시범 2,400만 원 → 월 구독(스타트 450 · 코어 850 · 엔터프라이즈 별도)</p></div>
+  </div>
+  <h2>3년 계획</h2>
+  <table><tr><th></th><th class="r">2027</th><th class="r">2028</th><th class="r">2029</th></tr>
+    <tr><td>연말 고객사</td><td class="r">3곳</td><td class="r">8곳</td><td class="r"><b>14곳</b></td></tr>
+    <tr><td>매출</td><td class="r">1.8억 원</td><td class="r">8.3억 원</td><td class="r"><b>14.4억 원</b></td></tr>
+    <tr><td>영업이익</td><td class="r">-0.2억 원</td><td class="r">3.8억 원</td><td class="r"><b>7.4억 원</b></td></tr>
+    <tr><td>인원</td><td class="r">4명</td><td class="r">5명</td><td class="r">7명</td></tr></table>
+  <p class="small" style="margin-top:3mm">재무는 보라말 재무 모델(전환율·해지율·인건비 가정 포함)의 기본 시나리오입니다. 흑자 전환 2027년 7월(3개월 평균), 먼저 나가는 돈 최대 0.89억 원. 가격은 VAT 별도 제안가입니다.</p>
+  <div class="ft"><span>팀 보라말 · 이소운 · 이시운</span><span>2</span></div>
+</section>
+
+<!-- 3. 왜 -->
+<section class="page"><div class="hd"><span>보라말 GEO 구독 서비스</span><span>1. 사업 이유</span></div>
+  <div class="no">01 · 이유</div>
+  <h1>제품 정보는 있는데,<br><em>AI 눈에는 빈 페이지</em>입니다</h1>
+  <div class="grid3">
+    <div class="card"><div class="lbl">소비자가 옮겨 간다</div><div class="big v" style="font-size:30pt">54.5%</div><p style="margin-top:2mm">최근 3개월 ChatGPT를 쓴 10~50대 비율(2025-12)</p><p class="small" style="margin-top:2mm">오픈서베이 AI 검색 트렌드 리포트 2026, 한국경제 2026-01-28. 주 검색 1순위는 아직 네이버(46%)</p></div>
+    <div class="card"><div class="lbl">AI는 글자를 읽는다</div><div class="big" style="font-size:30pt">글자만</div><p style="margin-top:2mm">AI 검색은 페이지의 글자를 근거로 답을 씁니다. 이미지 속 숫자는 근거로 쓰이기 어렵습니다</p></div>
+    <div class="card"><div class="lbl">대기업이 움직인다</div><div class="big" style="font-size:30pt">2026</div><p style="margin-top:2mm">아모레퍼시픽·롯데웰푸드 ChatGPT 앱(3~5월), CJ제일제당 자사몰 GEO(9월), 풀무원 GEO 뒤 공식몰 방문 2.3배(9월 발표)</p></div>
+  </div>
+  <h2>사람이 보는 화면과 AI가 읽는 글자</h2>
+  <div class="grid2"><div><img class="shot" src="img/motion/t022.5.jpg"></div>
+    <div><p>자사몰 상세페이지는 디자인을 위해 통이미지로 만듭니다. 그래서 크롤러가 받아 가는 HTML에는 <b>&lt;img&gt; 태그만</b> 남고 열량·당류·알레르기 같은 글자는 0자입니다.</p>
+    <p>AI는 공식 정보를 못 찾으면 블로그·쇼핑몰 글로 답을 채웁니다. 기준 용량이 틀리거나 알레르기 정보가 빠진 답이 나오고, 근거 링크도 다른 회사 몫이 됩니다.</p></div></div>
+  <h2>업계 점검: 식품 제품 페이지 51개 중 0개</h2>
+  <div class="grid2" style="align-items:center"><div class="card"><div class="big r" style="font-size:54pt">0 <span style="font-size:22pt;color:var(--dim)">/ 51</span></div><p style="margin-top:2mm">영양 6개 항목 중 3개 이상이 본문 글자로 있는 페이지</p></div>
+  <ul><li><b>사진 속에만:</b> 정보 칸은 '상세정보 참고', 값은 통이미지 안</li><li><b>AI 출입 금지 설정:</b> robots.txt가 AI 수집 프로그램을 막는 곳도 있음</li><li><b>제품 페이지가 없거나 빔:</b> 제품별 주소 없이 팝업으로만 뜸</li></ul></div>
+  <p class="small" style="margin-top:4mm">업계 점검: 보라말, 2026-10-23. 식품 회사 17곳에서 회사당 제품 페이지 3개를 자바스크립트 없이 글자만 받아 측정(AI 수집 프로그램과 같은 방식). 공개 보고서이므로 회사명은 적지 않았습니다. 사진 속 글자를 읽는 AI 모델도 있지만 AI 검색이 그것을 답의 근거로 쓰는지는 공개되어 있지 않습니다.</p>
+  <div class="ft"><span>팀 보라말</span><span>3</span></div>
+</section>
+
+<!-- 4. 무엇을 -->
+<section class="page"><div class="hd"><span>보라말 GEO 구독 서비스</span><span>2. 사업 내용</span></div>
+  <div class="no">02 · 내용</div>
+  <h1>사진 속 정보를 꺼내<br><em>AI 전용 공식 제품정보 사이트</em>로</h1>
+  <p class="lead">GEO(Generative Engine Optimization)는 소비자가 ChatGPT·구글 AI 요약 등에 제품을 물을 때 AI가 회사 공식 정보를 찾아 근거로 쓰게 하는 일입니다. 검색 순위보다 <b>사실의 정확성과 출처</b>를 다룹니다.</p>
+  <img class="shot" src="img/motion/t050.5.jpg" style="margin:3mm 0 4mm">
+  <div class="grid4">
+    <div class="card"><div class="lbl">01 공공 데이터</div><p>식품의약품안전처 <b>식품영양성분 DB</b>를 공공데이터포털 Open API로 받아 제품별 성분의 기준값을 확보합니다</p></div>
+    <div class="card"><div class="lbl">02 AI 이미지 분석</div><p>자사몰 상세 이미지 속 영양정보·원재료·알레르기·보관법을 <b>비전 AI</b>로 읽어 구조화 데이터로 꺼냅니다</p></div>
+    <div class="card"><div class="lbl">03 GEO 가공</div><p>두 출처를 대조해 차이를 표시하고, 기준 용량을 밝힌 문장·질문과 답·<b>schema.org 구조화 데이터</b>로 다듬습니다</p></div>
+    <div class="card v"><div class="lbl">04 발행·관리</div><p>고객사 하위 주소(guide.고객사.co.kr)에 발행하고 사이트맵·AI 수집 허용·검색엔진 등록 후 <b>매달 다시 잽니다</b></p></div>
+  </div>
+  <h2>고객사가 받는 것</h2>
+  <table><tr><th>받는 것</th><th>설명</th></tr>
+    <tr><td>공식 제품 가이드</td><td>제품마다 한 쪽. 포장 표시사항과 일치하는 영양정보·원재료·알레르기·보관법·자주 묻는 질문</td></tr>
+    <tr><td>AI 성적표</td><td>같은 질문을 매달 실제 AI에 묻고 포장 표시사항으로 채점한 결과(정답률·출처·오답 사례)</td></tr>
+    <tr><td>오류 대응</td><td>AI가 틀리게 말하는 항목을 찾아 가이드 문장·구조를 고치고 신제품을 반영</td></tr>
+    <tr><td>소유권</td><td>가이드 파일과 측정 원문은 매달 고객사로 넘깁니다. 보라말이 없어도 사이트는 남습니다</td></tr></table>
+  <div class="ft"><span>팀 보라말</span><span>4</span></div>
+</section>
+
+<!-- 5. 기술: 작동하는 시제품 -->
+<section class="page"><div class="hd"><span>보라말 GEO 구독 서비스</span><span>2. 사업 내용 · 시제품</span></div>
+  <div class="no">02 · 작동하는 시제품</div>
+  <h1>네 단계를 코드로 <em>실제로 돌려 봤습니다</em></h1>
+  <p>저장소의 <b>prototype/boramal_geo.py</b>는 가상 제품(보라 데모 두유)의 상세 이미지 한 장에서 공식 제품정보 사이트까지 자동으로 만듭니다. 실제 회사 데이터는 쓰지 않았습니다.</p>
+  <div class="grid2" style="grid-template-columns:.8fr 1.2fr">
+    <div><img class="shot" src="../prototype/samples/demo_detail.jpg" style="border:1px solid var(--line)"><div class="cap">입력: 통이미지 상세페이지(가상 제품)</div></div>
+    <div>
+      <div class="card" style="margin-bottom:3mm"><div class="lbl">① extract · AI 이미지 분석</div><p style="font-family:monospace;font-size:8.6pt;line-height:1.5">"열량": "105kcal", "당류": "3g", "단백질": "8g",<br>"allergens": ["대두"], "cross_contact": ["우유","땅콩"]</p></div>
+      <div class="card" style="margin-bottom:3mm"><div class="lbl">② public · 공공 DB 대조</div><p style="font-size:9.2pt">열량·나트륨·탄수화물·지방·단백질 <b style="color:var(--mint)">일치</b><br>당류 표시 3g / DB 4.2g, 차이 29% → <b style="color:var(--red)">사람 확인 목록</b></p></div>
+      <div class="card v"><div class="lbl">③④ build · GEO 가공과 발행 파일</div><p style="font-size:9.2pt">제품 페이지(기준 용량을 밝힌 첫 문장, 영양표, FAQ 6개, JSON-LD Product·FAQPage, 출처·확인일), index, sitemap.xml, robots.txt(GPTBot·OAI-SearchBot·ClaudeBot·PerplexityBot 등 허용), llms.txt</p></div>
+    </div></div>
+  <h2>GEO 가공 규칙 (보라말 노하우의 뼈대)</h2>
+  <div class="grid2"><ul>
+    <li><b>기준 용량을 문장마다:</b> "190mL 한 팩 기준 105kcal"처럼. AI가 100mL 값과 섞는 실수를 막음</li>
+    <li><b>첫 문장에 핵심 사실:</b> AI는 페이지 앞부분을 요약에 많이 씀</li>
+    <li><b>질문형 소제목:</b> 소비자가 실제로 묻는 말("알레르기 성분은?")로 답을 배치</li></ul>
+  <ul><li><b>구조화 데이터:</b> 화면 글자와 같은 값을 JSON-LD로 한 번 더</li>
+    <li><b>출처와 확인일:</b> 포장 표시사항 기준, 공공 DB 대조, 제조사 승인 표기</li>
+    <li><b>AI 수집 허용:</b> 검색용 AI 봇을 robots.txt에서 명시적으로 허용</li></ul></div>
+  <p class="small" style="margin-top:3mm">공공 API는 공공데이터포털 '식품의약품안전처_식품영양성분DB정보'입니다. 시제품은 키가 없으면 고정 응답(fixtures)을 쓰고, 키(DATA_GO_KR_KEY)를 넣으면 실제 API를 부르며, 응답 필드명은 config.json에서 맞춥니다. 이미지 분석은 Claude 비전 모델(claude CLI)로 했습니다.</p>
+  <div class="ft"><span>팀 보라말</span><span>5</span></div>
+</section>
+
+<!-- 6. 사례 -->
+<section class="page"><div class="hd"><span>보라말 GEO 구독 서비스</span><span>3. 검증된 사례</span></div>
+  <div class="no">03 · 사례</div>
+  <h1>매일유업에서 <em>먼저 만들고 검증</em>했습니다</h1>
+  <p class="lead">보라말은 매일유업 공식 제품 가이드 productguide.maeil.com을 만들어 납품했습니다. 같은 방식을 다른 식품·생활용품 회사에 구독으로 제공하는 것이 이 사업입니다.</p>
+  <img class="shot" src="img/motion/t033.5.jpg" style="margin:3mm 0 5mm">
+  <div class="grid2">
+    <div class="card"><h3>시험 1 · 제품 사실 정답률</h3><p class="small" style="margin-bottom:2mm">같은 AI·같은 질문에 넣어 준 자료만 바꿈(매일유업 제품 53개)</p>
+      <div style="font-size:9pt;font-weight:700">지금 홈페이지</div><div class="bar"><i style="width:21%;background:#a9a3c9"></i><b>21%</b></div>
+      <div style="font-size:9pt;font-weight:700">공식 제품 가이드</div><div class="bar"><i style="width:99%"></i><b>99%</b></div></div>
+    <div class="card"><h3>시험 2 · 경쟁 제품 사이 선택률</h3><p class="small" style="margin-bottom:2mm">경쟁 제품 4개와 나란히 주고 하나를 고르게 함(무작위면 20%)</p>
+      <div style="font-size:9pt;font-weight:700">지금 홈페이지</div><div class="bar"><i style="width:26%;background:#a9a3c9"></i><b>26%</b></div>
+      <div style="font-size:9pt;font-weight:700">공식 제품 가이드</div><div class="bar"><i style="width:86%"></i><b>86%</b></div></div>
+  </div>
+  <p class="small" style="margin-top:4mm">보라말 시험(2026-10-13). 두 시험 모두 자료를 AI 대화창에 직접 넣은 조건이며 Claude 2종을 썼습니다. 99%는 포장 표시사항을 그대로 옮긴 가이드를 준 최대치이지 서비스 보장값이 아닙니다. 실제 AI 검색 답에서의 효과는 고객사 제품 절반만 먼저 올리는 90일 시범으로 고객사마다 측정합니다.</p>
+  <h2>이 사례가 주는 것</h2>
+  <ul><li><b>만드는 방법이 이미 있다:</b> 포장 표시사항 대조, 페이지 구조, 발행 설정을 실제 대기업 사이트로 운영해 봄</li>
+    <li><b>재는 방법이 이미 있다:</b> 질문 세트, AI 채점, 두 채점관 일치도(κ 0.97) 같은 측정 체계를 갖춤</li>
+    <li><b>영업 첫마디가 생긴다:</b> "유제품 대기업 제품으로 시험한 방식"으로 첫 미팅을 엽니다</li></ul>
+  <div class="ft"><span>팀 보라말</span><span>6</span></div>
+</section>
+
+<!-- 7. 시장·차별점 -->
+<section class="page"><div class="hd"><span>보라말 GEO 구독 서비스</span><span>4. 고객과 차별점</span></div>
+  <div class="no">04 · 고객과 차별점</div>
+  <h1>누구에게 팔고,<br><em>왜 보라말</em>인가</h1>
+  <h2>첫 고객</h2>
+  <div class="grid3">
+    <div class="card v"><div class="lbl">1순위</div><h3>식품·음료 대기업</h3><p>제품 수백 개, 영양·알레르기 정보가 구매를 좌우. 상세페이지가 통이미지</p></div>
+    <div class="card"><div class="lbl">2순위</div><h3>건강기능식품</h3><p>원료·함량·섭취법 질문이 많고 표시 규정이 엄격</p></div>
+    <div class="card"><div class="lbl">3순위</div><h3>뷰티·생활용품</h3><p>전성분·사용법 질문. 같은 구조로 확장</p></div>
+  </div>
+  <p class="small" style="margin-top:2mm">매일유업과 주력 품목이 겹치는 회사는 영업하지 않습니다. 업종별 첫 고객 1곳에는 24개월 가격 고정과 12개월 같은 품목 경쟁사 미수주를 제안합니다.</p>
+  <h2>다른 선택지와 비교</h2>
+  <table><tr><th>선택지</th><th>하는 일</th><th>한계</th></tr>
+    <tr><td>SEO·광고 대행사</td><td>검색 순위, 키워드, 광고</td><td>AI 답의 사실 정확성은 다루지 않음</td></tr>
+    <tr><td>자사몰 GEO 솔루션</td><td>자사몰 페이지에 AI용 설명·Q&amp;A 추가</td><td>쇼핑몰 구조를 고쳐야 하고 이미지 속 값 대조는 별도</td></tr>
+    <tr><td>사내 웹팀</td><td>직접 수정</td><td>매달 AI 답을 재고 고치는 인력·측정 체계가 없음</td></tr>
+    <tr><td style="color:var(--vio);font-weight:800">보라말</td><td><b>이미지 추출 + 공공 DB 대조 + 별도 AI용 사이트 + 매달 측정</b></td><td>자사몰을 건드리지 않고 하위 주소 하나로 시작</td></tr></table>
+  <h2>보라말의 강점</h2>
+  <div class="grid3">
+    <div class="card"><h3>자사몰 무변경</h3><p>고객사 IT팀 부담은 주소 연결 1건과 가이드 링크뿐</p></div>
+    <div class="card"><h3>정확성 대조</h3><p>이미지 추출값을 공공 DB와 대조해 틀린 정보를 발행하지 않음</p></div>
+    <div class="card"><h3>측정으로 증명</h3><p>매달 실제 AI에 같은 질문을 던져 성적표로 보고</p></div>
+  </div>
+  <p class="small" style="margin-top:4mm">대행 시세: 전담 GEO 대행 월 500만~2,000만 원(국내 대행사 공개 가격, 2026-10-23 열람). 보라말 스타트 요금 450만 원은 그 하단보다 낮게 잡았습니다.</p>
+  <div class="ft"><span>팀 보라말</span><span>7</span></div>
+</section>
+
+<!-- 8. 수익 모델 -->
+<section class="page"><div class="hd"><span>보라말 GEO 구독 서비스</span><span>5. 수익 모델</span></div>
+  <div class="no">05 · 수익 모델</div>
+  <h1>무료 성적표로 열고,<br><em>월 구독</em>으로 갑니다</h1>
+  <div class="flow" style="margin-top:4mm">
+    <div class="card"><div class="lbl">무료</div><h3 style="font-size:15pt">AI 성적표</h3><p>고객사 제품 10개를 실제 AI에 묻고 포장 표시사항으로 채점한 1장. 첫 미팅에 들고 감</p></div>
+    <div class="arrow">→</div>
+    <div class="card"><div class="lbl">2,400만 원</div><h3 style="font-size:15pt">90일 시범</h3><p>제품 60개 중 30개만 먼저 올려 나머지 30개와 비교. 품질 약속을 못 지키면 전액 환불</p></div>
+    <div class="arrow">→</div>
+    <div class="card d"><div class="lbl" style="color:#b8a4ff">월 구독</div><h3 style="font-size:15pt">매달 관리</h3><p style="color:#d9d3fb">측정 · 수정 · 신제품 반영 · 보고. 30일 안 구독 시 구축비 면제</p></div>
+  </div>
+  <h2>구독 요금 (제안, VAT 별도, 12개월 계약)</h2>
+  <div class="grid3">
+    <div class="card"><div class="lbl">스타트</div><div class="big" style="font-size:30pt">월 450<span style="font-size:13pt;color:var(--dim)">만 원</span></div><ul style="margin-top:3mm"><li>제품 60개</li><li>월 1회 측정</li><li>월간 대시보드·분기 보고</li></ul></div>
+    <div class="card v"><div class="lbl">코어</div><div class="big v" style="font-size:30pt">월 850<span style="font-size:13pt;color:var(--dim)">만 원</span></div><ul style="margin-top:3mm"><li>제품 200개</li><li>월 2회 측정, 오답 알림</li><li>네이버 블로그·스토어용 원고</li></ul></div>
+    <div class="card"><div class="lbl">엔터프라이즈</div><div class="big" style="font-size:30pt">별도 협의</div><ul style="margin-top:3mm"><li>제품 200개 초과</li><li>주 1회 측정</li><li>계열사·다국어 사이트</li></ul></div>
+  </div>
+  <h2>돈을 거는 약속은 보라말이 통제하는 품질만</h2>
+  <div class="grid4">
+    <div class="card"><div class="big v" style="font-size:24pt">42일</div><p>자료 받고 첫 30개 게시</p></div>
+    <div class="card"><div class="big v" style="font-size:24pt">99.5%</div><p>포장 표시사항과 일치</p></div>
+    <div class="card"><div class="big v" style="font-size:24pt">100%</div><p>AI가 읽는 글자로</p></div>
+    <div class="card"><div class="big v" style="font-size:24pt">24시간</div><p>오류 수정·검색엔진 등록</p></div>
+  </div>
+  <p style="margin-top:4mm">AI가 브랜드를 말하는 비율·순위·매출은 AI 회사가 정하므로 누구도 약속할 수 없습니다. 보라말은 그것을 약속하지 않고 <b>매달 재서 보고</b>합니다. 구독 중 오류는 건당 월 구독료의 2%를 돌려드립니다(월 20% 한도).</p>
+  <div class="ft"><span>팀 보라말</span><span>8</span></div>
+</section>
+
+<!-- 9. 절차 -->
+<section class="page"><div class="hd"><span>보라말 GEO 구독 서비스</span><span>6. 실행 절차</span></div>
+  <div class="no">06 · 절차</div>
+  <h1>고객 한 곳을 맡는 <em>90일</em></h1>
+  <table style="margin-top:3mm"><tr><th style="width:22%">기간</th><th style="width:38%">보라말</th><th>고객사</th></tr>
+    <tr><td><b>0주 · 첫 미팅</b></td><td>무료 AI 성적표(제품 10개) 설명, 90일 시범 제안</td><td>실무 책임자 지정</td></tr>
+    <tr><td><b>1~2주 · 수집</b></td><td>자사몰 상세 이미지 수집, AI 이미지 분석, 공공 DB 대조, 기준 측정(질문 120개 × 3회)</td><td>포장 표시사항 원본 제공</td></tr>
+    <tr><td><b>3~6주 · 1차 발행</b></td><td>무작위로 고른 30개 가이드 작성, 대조표 첨부</td><td>가이드 승인, 하위 주소 연결 1건</td></tr>
+    <tr><td><b>7~10주 · 비교</b></td><td>먼저 올린 30개와 나머지 30개를 같은 질문으로 비교 측정</td><td>제품 페이지에 가이드 링크</td></tr>
+    <tr><td><b>11~13주 · 보고</b></td><td>나머지 30개 게시, 시범 보고서(효과 있음 · 없음 · 판정 불가)</td><td>구독 여부 결정</td></tr>
+    <tr><td><b>매달 · 구독</b></td><td>길 내기(링크·점검) → 알리기(검색엔진 등록) → 고치기(오답·신제품) → 다시 재기(성적표)</td><td>신제품 자료 전달, 승인</td></tr></table>
+  <h2>왜 절반만 먼저 올리나</h2>
+  <div class="grid2" style="align-items:center">
+    <div class="card"><div class="flow"><div class="card v" style="text-align:center"><b>먼저 올린 30개</b><p class="small">가이드 있음</p></div><div class="card" style="text-align:center"><b>나머지 30개</b><p class="small">비교 기준</p></div></div></div>
+    <p>계절·광고·AI 모델 변화는 두 묶음에 똑같이 작용합니다. 안 올린 30개가 있어야 <b>가이드 효과만</b> 떼어 볼 수 있습니다. 먼저 올린 묶음의 정답률이 우연으로 보기 어려울 만큼 높으면 '효과 있음'으로 판정합니다.</p></div>
+  <h2>고객사가 하지 않아도 되는 일</h2>
+  <ul><li>자사몰 개편이나 상세페이지 재제작</li><li>보라말에 내부 시스템 접속 권한이나 개인정보를 넘기는 일</li><li>AI 회사와의 별도 계약</li></ul>
+  <div class="ft"><span>팀 보라말</span><span>9</span></div>
+</section>
+
+<!-- 10. 계획 -->
+<section class="page"><div class="hd"><span>보라말 GEO 구독 서비스</span><span>7. 사업 계획</span></div>
+  <div class="no">07 · 계획</div>
+  <h1>3년 차 고객 14곳,<br><em>매출 14.4억 원</em></h1>
+  <div class="grid2" style="grid-template-columns:1.1fr .9fr;align-items:end">
+    <svg viewBox="0 0 360 230" style="width:100%">
+      <line x1="20" y1="200" x2="350" y2="200" stroke="#d8d3ee"/>
+      <g font-family="P" font-weight="800" text-anchor="middle">
+        <rect x="45" y="181" width="60" height="19" rx="4" fill="#c9bdfc"/><text x="75" y="173" font-size="13" fill="#1a1533">1.8억</text><text x="75" y="218" font-size="11" fill="#5d5785">2027 · 3곳</text>
+        <rect x="150" y="113" width="60" height="87" rx="4" fill="#9b84ff"/><text x="180" y="105" font-size="13" fill="#1a1533">8.3억</text><text x="180" y="218" font-size="11" fill="#5d5785">2028 · 8곳</text>
+        <rect x="255" y="50" width="60" height="150" rx="4" fill="#7b5cff"/><text x="285" y="42" font-size="13" fill="#1a1533">14.4억</text><text x="285" y="218" font-size="11" fill="#5d5785">2029 · 14곳</text>
+      </g></svg>
+    <div><div class="card d"><div class="lbl" style="color:#b8a4ff">3년 차 영업이익</div><div class="big" style="color:#fff">7.4억 원</div></div>
+      <div class="grid2" style="margin-top:3mm"><div class="card"><div class="lbl">흑자 전환</div><b style="font-size:14pt">2027-07</b></div><div class="card"><div class="lbl">먼저 나가는 돈</div><b style="font-size:14pt">최대 0.89억</b></div></div></div>
+  </div>
+  <h2>단계별 실행 계획</h2>
+  <table><tr><th style="width:24%">시기</th><th>목표</th><th style="width:25%">이정표</th></tr>
+    <tr><td>2026년 11~12월</td><td>시제품을 서비스용 파이프라인으로(공공 API 키 연결, 이미지 분석 검수 화면, 측정 자동화), 업종별 1순위 회사 성적표 제작</td><td>성적표 9건</td></tr>
+    <tr><td>2027년 상반기</td><td>업종별 첫 고객 3곳과 90일 시범, 사례 익명 공개 동의</td><td>시범 3건, 첫 매출</td></tr>
+    <tr><td>2027년 하반기</td><td>시범 → 구독 전환, 운영 매니저 채용</td><td>구독 3곳, 흑자 전환</td></tr>
+    <tr><td>2028년</td><td>네이버 측정 방법 확보, 코어 요금제 비중 확대, 광고대행사 파트너 채널</td><td>고객 8곳, 매출 8.3억</td></tr>
+    <tr><td>2029년</td><td>다국어(수출 제품)·계열사 사이트, 뷰티·생활용품 확장</td><td>고객 14곳, 매출 14.4억</td></tr></table>
+  <h2>역할과 인원</h2>
+  <div class="grid2"><div class="card"><h3>이소운 · 기획·영업·GEO 설계</h3><p>매일유업 공식 제품 가이드 기획·납품, 측정 체계 설계, 고객 미팅</p></div>
+    <div class="card"><h3>이시운 · 개발·데이터</h3><p>추출·대조·발행 파이프라인, 측정 자동화, 사이트 운영</p></div></div>
+  <p class="small" style="margin-top:3mm">인원은 2027년 말 4명, 2029년 말 7명(재무 모델 가정). 3년 비용 13.5억 원 중 사람 8.0억, AI·클라우드 2.3억. 시나리오: 약세 3년 차 고객 6곳·영업이익 2.1억, 강세 25곳·16.4억.</p>
+  <div class="ft"><span>팀 보라말</span><span>10</span></div>
+</section>
+
+<!-- 11. 위험 -->
+<section class="page"><div class="hd"><span>보라말 GEO 구독 서비스</span><span>8. 위험과 대응</span></div>
+  <div class="no">08 · 위험</div>
+  <h1>예상되는 질문과 <em>대응</em></h1>
+  <table style="margin-top:4mm"><tr><th style="width:30%">위험·질문</th><th>대응</th></tr>
+    <tr><td><b>시험 결과일 뿐 아닌가?</b></td><td>맞습니다. 그래서 실제 AI 답의 효과는 약속하지 않고, 고객사 제품 절반으로 90일 동안 비교해 숫자로 보여 줍니다. 품질 약속을 못 지키면 시범비 전액 환불</td></tr>
+    <tr><td><b>AI가 틀린 값을 추출하면?</b></td><td>공공 DB 대조로 차이 큰 항목을 사람 확인 목록에 올리고, 모든 가이드는 고객사 승인 후 발행. 표본 검수 기준 99.5% 일치를 약속</td></tr>
+    <tr><td><b>한국은 네이버 아닌가?</b></td><td>네이버 AI 답변은 측정 방법 확보 전이라 숫자·약속을 하지 않습니다. 가이드는 네이버 서치어드바이저에도 등록하고, 코어 요금제는 블로그·스토어용 원고를 제공</td></tr>
+    <tr><td><b>AI 회사가 규칙을 바꾸면?</b></td><td>순위 기술이 아니라 '정확한 공식 글자'를 두는 일이라 규칙 변화에 강합니다. 매달 측정으로 변화를 먼저 발견</td></tr>
+    <tr><td><b>두 명 회사에 맡겨도 되나?</b></td><td>내부 시스템에 들어가지 않고, 가이드 파일·측정 원문을 매달 넘겨 보라말이 없어도 사이트가 남습니다. 인원은 고객 수에 맞춰 늘림</td></tr>
+    <tr><td><b>공공 DB에 없는 제품은?</b></td><td>포장 표시사항(이미지)이 기준입니다. 공공 DB는 대조·보충용이라 없어도 발행 가능</td></tr>
+    <tr><td><b>표시·광고 규정</b></td><td>포장 표시사항에 있는 사실만 옮기고 효능 표현을 새로 쓰지 않습니다. 계약 전 법무 확인</td></tr>
+    <tr><td><b>경쟁사 진입</b></td><td>업종별 첫 고객 조건(같은 품목 12개월 미수주)으로 사례를 먼저 쌓고, 측정 데이터가 쌓일수록 가공 규칙이 좋아지는 구조</td></tr></table>
+  <h2>사업 원칙</h2>
+  <div class="grid3"><div class="card v"><h3>실측값만</h3><p>모든 숫자는 측정 날짜와 조건을 붙여 씁니다</p></div><div class="card v"><h3>통제할 수 있는 것만 약속</h3><p>품질은 보장, AI 답은 측정</p></div><div class="card v"><h3>고객 소유</h3><p>가이드·측정 원문은 고객사 자산</p></div></div>
+  <div class="ft"><span>팀 보라말</span><span>11</span></div>
+</section>
+
+<!-- 12. 모션그래픽 제작 -->
+<section class="page"><div class="hd"><span>보라말 GEO 구독 서비스</span><span>9. 제출물 1 · 모션그래픽</span></div>
+  <div class="no">09 · 모션그래픽 제작</div>
+  <h1>코드로 그린 <em>1분 11초 사업 설명</em></h1>
+  <p>사업의 이유 → 내용 → 근거 → 방법 → 돈 → 계획을 8장면으로 설명합니다. 화면 위 진행 막대가 지금 어느 이야기인지 보여 줍니다.</p>
+  <div class="grid4" style="gap:2.5mm">
+    <div><img class="shot" src="img/motion/t003.5.jpg"><div class="cap">① 검색창 대신 AI에게 묻는다</div></div>
+    <div><img class="shot" src="img/motion/t011.5.jpg"><div class="cap">② AI는 우리 제품을 모른다</div></div>
+    <div><img class="shot" src="img/motion/t022.5.jpg"><div class="cap">③ AI 눈에는 빈 페이지, 0/51</div></div>
+    <div><img class="shot" src="img/motion/t033.5.jpg"><div class="cap">④ 매일유업 사례, 21→99%</div></div>
+    <div><img class="shot" src="img/motion/t050.5.jpg"><div class="cap">⑤ 네 단계 파이프라인</div></div>
+    <div><img class="shot" src="img/motion/t059.5.jpg"><div class="cap">⑥ 성적표 → 시범 → 구독</div></div>
+    <div><img class="shot" src="img/motion/t064.8.jpg"><div class="cap">⑦ 3년 계획</div></div>
+    <div><img class="shot" src="img/motion/t069.2.jpg"><div class="cap">⑧ AI가 읽어야, 선택됩니다</div></div>
+  </div>
+  <h2>만든 방법</h2>
+  <table><tr><th style="width:24%">단계</th><th>도구와 방법</th></tr>
+    <tr><td>대본·나레이션</td><td>장면별 문장 8개를 쓰고 ElevenLabs(eleven_v4, 한국어)로 녹음. 음성 인식(faster-whisper)으로 발음 검수</td></tr>
+    <tr><td>장면 시간</td><td>나레이션 길이와 글자별 타이밍으로 장면 시작을 정함. '공공', 'AI 이미지' 같은 단어가 들리는 순간 해당 카드가 등장</td></tr>
+    <tr><td>그래픽</td><td>HTML Canvas에 직접 그린 결정적 렌더러(<code>__render(t)</code>). 이징·스프링 애니메이션, 보라말 로고(말풍선+말 머리)도 코드로 디자인</td></tr>
+    <tr><td>렌더링</td><td>Puppeteer로 1920×1080 30fps 2,130프레임을 찍어 ffmpeg(H.264)로 인코딩</td></tr>
+    <tr><td>음향</td><td>Mixkit 무료 음원 'Digital Clouds' + 나레이션 구간 자동 덕킹 + 코드로 합성한 전환 효과음, -14 LUFS</td></tr></table>
+  <p class="small" style="margin-top:3mm">소스: motion/index.html, tools/render.mjs, tools/vo.py, tools/mix.py. 폰트 Pretendard(OFL).</p>
+  <div class="ft"><span>팀 보라말</span><span>12</span></div>
+</section>
+
+<!-- 13. AI 영화 제작 -->
+<section class="page"><div class="hd"><span>보라말 GEO 구독 서비스</span><span>10. 제출물 2 · AI 영화</span></div>
+  <div class="no">10 · AI 영화 제작</div>
+  <h1>AI 영화 <em>《읽히지 않는 제품》</em></h1>
+  <p>모션그래픽이 사업을 설명한다면, 영화는 같은 문제를 <b>한 엄마의 하룻밤</b>으로 느끼게 합니다. 밤에 AI가 답하지 못한 질문이, 보라말을 거친 다음 날 아침 공식 정보로 답해집니다. 화면 전체를 <b>종이접기 질감</b>으로 만들어, 종이(상세페이지 이미지)에 갇힌 정보를 접고 펼쳐 꺼낸다는 사업의 이야기를 시각으로 옮겼습니다.</p>
+  <div class="grid4" style="gap:2.5mm">
+    <div><img class="shot" src="img/k1_prev.jpg"><div class="cap">① 밤 11시, AI가 답하지 못함</div></div>
+    <div><img class="shot" src="img/k2_prev.jpg"><div class="cap">② 정보는 사진 속에</div></div>
+    <div><img class="shot" src="img/k3_prev.jpg"><div class="cap">③ 보라말 형제</div></div>
+    <div><img class="shot" src="img/k4_prev.jpg"><div class="cap">④ AI 이미지 분석</div></div>
+    <div><img class="shot" src="img/k5_prev.jpg"><div class="cap">⑤ 공공 DB 대조 · 사이트 발행</div></div>
+    <div><img class="shot" src="img/k6_prev.jpg"><div class="cap">⑥ 다음 날 아침, 정확한 답</div></div>
+    <div><img class="shot" src="img/k7_prev.jpg"><div class="cap">⑦ 새벽 옥상의 형제</div></div>
+    <div><img class="shot" src="img/motion/t069.2.jpg"><div class="cap">엔딩 카드</div></div>
+  </div>
+  <h2>만든 방법</h2>
+  <table><tr><th style="width:24%">단계</th><th>도구와 방법</th></tr>
+    <tr><td>실제 인물</td><td>보라말 형제는 이소운·이시운 본인 사진 3장을 참조로 넣어 실제 얼굴을 살리고 옷만 브랜드 색(보라 계열)으로 바꾼 기준 이미지를 먼저 만든 뒤, 종이 인형이 되어도 알아볼 수 있게 장면마다 다시 참조</td></tr>
+    <tr><td>장면 첫 프레임</td><td>Higgsfield GPT Image 2.5(2K, 16:9)로 실사 장면 7장을 먼저 만들고, 같은 구도를 유지한 채 종이접기 디오라마 질감으로 다시 그림. 화면 속 글자는 AI가 깨뜨리기 쉬워 편집에서 대화 UI를 얹음</td></tr>
+    <tr><td>영상 생성</td><td>Higgsfield Kling 3.0 이미지→영상, 컷당 10초 × 6(종이 스톱모션 움직임과 카메라 이동을 컷마다 지정). 작업실 장면은 Higgsfield Origami 프리셋으로 실사 영상을 종이접기로 변환(8fps). 소리는 끄고 크레딧 절약</td></tr>
+    <tr><td>편집</td><td>ffmpeg로 0.5초 교차 전환, 제목·자막·대화 UI·단계 라벨 오버레이, 모션그래픽과 같은 엔딩 카드</td></tr>
+    <tr><td>음향</td><td>ElevenLabs 나레이션(여성, 7문장) + Mixkit 'A New Life'(조용히 시작해 커지는 곡을 이야기의 전환점에 맞춤) + 덕킹</td></tr></table>
+  <p class="small" style="margin-top:3mm">소스: film/keyframes/prompts.tsv, film/motion.tsv, tools/film_edit.py. 사용 크레딧은 README에 기록.</p>
+  <div class="ft"><span>팀 보라말</span><span>13</span></div>
+</section>
+
+<!-- 14. 제출물·출처 -->
+<section class="page"><div class="hd"><span>보라말 GEO 구독 서비스</span><span>제출물 구성과 출처</span></div>
+  <div class="no">APPENDIX</div>
+  <h1>제출물 구성과 출처</h1>
+  <h2>GitHub 저장소 구성</h2>
+  <table><tr><th style="width:40%">경로</th><th>내용</th></tr>
+    <tr><td><code>deliverables/1_모션그래픽_보라말_GEO.mp4</code></td><td>모션그래픽, 1분 11초, 1920×1080</td></tr>
+    <tr><td><code>deliverables/2_AI영화_보라말_GEO_읽히지않는제품.mp4</code></td><td>AI 영화, 1분 10초, 1920×1080</td></tr>
+    <tr><td><code>deliverables/3_사업계획서_보라말_GEO.pdf</code></td><td>이 보고서</td></tr>
+    <tr><td><code>prototype/</code></td><td>작동하는 GEO 파이프라인 시제품과 생성된 사이트</td></tr>
+    <tr><td><code>motion/ · film/ · tools/ · script/</code></td><td>모션그래픽 소스, AI 영화 프롬프트·편집, 렌더·음향 스크립트, 대본</td></tr></table>
+  <h2>출처</h2>
+  <ul style="font-size:9pt">
+    <li>오픈서베이 'AI 검색 트렌드 리포트 2026'(10~50대 1,000명, 2025-12), 한국경제 2026-01-28</li>
+    <li>아모레퍼시픽 ChatGPT 앱 출시(2026-03-13 회사 발표), 롯데웰푸드·롯데칠성음료 ChatGPT 앱(2026-04-15, 2026-05-13 보도)</li>
+    <li>플래티어 '젠서 GEO' 자사몰 적용(CJ제일제당 등, 2026-09 보도), 풀무원 GEO 적용 뒤 공식몰 방문 2.3배(2026-09-22 보도, 광고·계절 효과 미구분)</li>
+    <li>보라말 업계 점검(2026-10-23), 보라말 매일유업 공식 제품 가이드 시험(2026-10-13)</li>
+    <li>식품의약품안전처 식품영양성분 DB(공공데이터포털 Open API)</li>
+    <li>음원 Mixkit Free License, 폰트 Pretendard(OFL), 나레이션 ElevenLabs(상업 이용 포함 요금제)</li></ul>
+  <h2>정직성 메모</h2>
+  <p style="font-size:9.6pt">시험 수치(21→99%, 26→86%)는 자료를 AI에 직접 넣은 조건의 결과이며 실제 AI 검색 답의 보장값이 아닙니다. 재무 수치는 가정이 포함된 모델 값이고 매출 실적은 아직 없습니다. 보라말 형제는 본인 사진을 바탕으로 AI가 만든 모습이고, 그 밖의 인물·제품·대화는 연출이며, 모션그래픽의 AI 대화(당류 3g·5g)는 문제를 보여 주기 위한 예시입니다. 시제품의 제품은 가상 제품입니다.</p>
+  <div class="ft"><span>팀 보라말</span><span>14</span></div>
+</section>
+</body></html>

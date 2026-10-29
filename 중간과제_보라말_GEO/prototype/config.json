@@ -1,0 +1,8 @@
+{
+  "public_api": {
+    "_설명": "식품의약품안전처_식품영양성분DB정보(공공데이터포털). 키 발급 뒤 첫 응답의 필드명으로 field_map 을 확정한다.",
+    "endpoint": "https://apis.data.go.kr/1471000/FoodNtrCpntDbInfo02/getFoodNtrCpntDbInq02",
+    "name_param": "FOOD_NM_KR",
+    "field_map": {"식품명": "FOOD_NM_KR", "업체명": "MAKER_NM", "기준량": "SERVING_SIZE", "열량": "AMT_NUM1", "단백질": "AMT_NUM3", "지방": "AMT_NUM4", "탄수화물": "AMT_NUM6", "당류": "AMT_NUM7", "나트륨": "AMT_NUM13"}
+  }
+}

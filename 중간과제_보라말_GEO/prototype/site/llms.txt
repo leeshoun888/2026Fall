@@ -1,0 +1,6 @@
+# 예시 브랜드 공식 제품 가이드
+
+> 포장 표시사항 기준 공식 제품 정보. 영양정보는 총 내용량 기준.
+
+## 제품
+- [보라 데모 두유 190mL](https://guide.example-brand.co.kr/products/bora-demo-soymilk-190ml): 열량 105kcal, 알레르기 대두

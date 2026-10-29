@@ -1,0 +1,29 @@
+{
+ "product_name": "보라 데모 두유",
+ "volume": "190mL",
+ "serving_basis": "총 내용량 190mL",
+ "nutrition": {
+  "열량": "105kcal",
+  "나트륨": "120mg",
+  "탄수화물": "7g",
+  "당류": "3g",
+  "지방": "5g",
+  "트랜스지방": "0g",
+  "포화지방": "0.8g",
+  "콜레스테롤": "0mg",
+  "단백질": "8g"
+ },
+ "ingredients": "대두(국산) 98%, 정제수, 천일염",
+ "allergens": [
+  "대두"
+ ],
+ "cross_contact": [
+  "우유",
+  "땅콩"
+ ],
+ "storage": "직사광선을 피해 서늘한 곳에 실온 보관",
+ "source": {
+  "type": "상세페이지 이미지(AI 이미지 분석)",
+  "file": "demo_detail.jpg"
+ }
+}

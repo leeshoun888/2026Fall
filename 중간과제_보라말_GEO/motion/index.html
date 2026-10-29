@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><title>보라말 GEO 모션그래픽</title>
+<style>
+@font-face{font-family:P;font-weight:600;src:url(/assets/fonts/Pretendard-SemiBold.otf)}
+@font-face{font-family:P;font-weight:700;src:url(/assets/fonts/Pretendard-Bold.otf)}
+@font-face{font-family:P;font-weight:800;src:url(/assets/fonts/Pretendard-ExtraBold.otf)}
+@font-face{font-family:P;font-weight:900;src:url(/assets/fonts/Pretendard-Black.otf)}
+html,body{margin:0;background:#0d0a1c;overflow:hidden}
+canvas{display:block;width:100vw;height:auto}
+</style></head><body>
+<canvas id="c" width="1920" height="1080"></canvas>
+<script>
+// 결정적 렌더러: window.__render(t) 가 t초 장면을 그린다. 미리보기는 ?play 로 실시간 재생.
+const W = 1920, H = 1080;
+const cv = document.getElementById('c'), g = cv.getContext('2d');
+const C = { bg: '#0d0a1c', bg2: '#171233', ink: '#ffffff', sub: '#b9b2d9', dim: '#6f6896', vio: '#8b6cff', vio2: '#b8a4ff', mint: '#3ee0b0', red: '#ff5a6e', amber: '#ffc35a', card: '#1d1740', line: '#2e2660' };
+// 나레이션 시작 시각(초). audio/motion_lines.json 길이로 정함
+const VO = { m1: 0.6, m2: 5.5, m3: 13.2, m4: 24.4, m5: 35.2, m6: 53.4, m7: 61.3, m8: 66.5 };
+const END = 71.0;
+const SC = [ ['s1', 0, VO.m2 - .35], ['s2', VO.m2 - .35, VO.m3 - .35], ['s3', VO.m3 - .35, VO.m4 - .35], ['s4', VO.m4 - .35, VO.m5 - .35],
+  ['s5', VO.m5 - .35, VO.m6 - .35], ['s6', VO.m6 - .35, VO.m7 - .35], ['s7', VO.m7 - .35, VO.m8 - .35], ['s8', VO.m8 - .35, END] ];
+window.__duration = END; window.__vo = VO;
+
+const cl = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const ramp = (t, a, d) => cl((t - a) / d);
+const eo = x => 1 - Math.pow(1 - cl(x), 3);
+const eio = x => { x = cl(x); return x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2; };
+const back = x => { x = cl(x); const c1 = 1.5, c3 = c1 + 1; return 1 + c3 * Math.pow(x - 1, 3) + c1 * Math.pow(x - 1, 2); };
+const lerp = (a, b, x) => a + (b - a) * x;
+function rnd(i) { const s = Math.sin(i * 127.1 + 311.7) * 43758.5453; return s - Math.floor(s); }
+
+function font(sz, w = 700) { g.font = `${w} ${sz}px P`; }
+function txt(s, x, y, sz, col = C.ink, w = 700, al = 'left', a = 1) { g.save(); g.globalAlpha *= a; font(sz, w); g.fillStyle = col; g.textAlign = al; g.textBaseline = 'middle'; g.fillText(s, x, y); g.restore(); }
+function rr(x, y, w, h, r) { g.beginPath(); g.roundRect(x, y, w, h, r); }
+function card(x, y, w, h, r = 22, fill = C.card, stroke = C.line) { rr(x, y, w, h, r); g.fillStyle = fill; g.fill(); if (stroke) { g.lineWidth = 2; g.strokeStyle = stroke; g.stroke(); } }
+// 글자가 아래에서 떠오르는 제목
+function rise(s, x, y, sz, t0, t, col = C.ink, w = 800, al = 'left') { const k = eo(ramp(t, t0, .6)); txt(s, x, y + (1 - k) * 40, sz, col, w, al, k); }
+function tag(s, x, y, t0, t, col = C.vio2) { const k = eo(ramp(t, t0, .5)); g.save(); g.globalAlpha = k; font(26, 700); const w = g.measureText(s).width + 40; rr(x, y - 22, w, 44, 22); g.fillStyle = 'rgba(139,108,255,.16)'; g.fill(); g.strokeStyle = 'rgba(139,108,255,.55)'; g.lineWidth = 1.5; g.stroke(); txt(s, x + 20, y + 1, 26, col, 700); g.restore(); }
+function foot(s, t, a = 1) { txt(s, 80, H - 46, 22, C.dim, 600, 'left', a); }
+
+// 보라말 심볼: 말풍선 + 말 머리 실루엣을 겹친 보라색 마크
+function logoMark(cx, cy, s, a = 1) {
+  g.save(); g.globalAlpha *= a; g.translate(cx, cy); g.scale(s / 100, s / 100);
+  const grd = g.createLinearGradient(-50, -50, 50, 50); grd.addColorStop(0, '#a58bff'); grd.addColorStop(1, '#6a45f0');
+  g.beginPath(); g.moveTo(-34, -46); g.lineTo(34, -46); g.quadraticCurveTo(50, -46, 50, -30); g.lineTo(50, 18); g.quadraticCurveTo(50, 34, 34, 34);
+  g.lineTo(-6, 34); g.lineTo(-26, 52); g.lineTo(-22, 34); g.lineTo(-34, 34); g.quadraticCurveTo(-50, 34, -50, 18); g.lineTo(-50, -30); g.quadraticCurveTo(-50, -46, -34, -46); g.closePath();
+  g.fillStyle = grd; g.fill();
+  // 말 머리(오른쪽을 보는 옆모습)
+  g.beginPath(); g.moveTo(-20, 22); g.lineTo(-16, -8); g.quadraticCurveTo(-12, -28, 6, -32); g.lineTo(10, -40); g.lineTo(14, -30);
+  g.quadraticCurveTo(30, -24, 34, -6); g.quadraticCurveTo(36, 2, 28, 4); g.quadraticCurveTo(16, 2, 10, -4); g.quadraticCurveTo(6, 8, 10, 22); g.closePath();
+  g.fillStyle = '#ffffff'; g.fill();
+  g.beginPath(); g.arc(18, -16, 3, 0, 7); g.fillStyle = '#6a45f0'; g.fill();
+  g.restore();
+}
+function logo(cx, cy, s, a = 1) { logoMark(cx - s * 1.25, cy, s, a); txt('보라말', cx - s * .55, cy + s * .02, s * .78, C.ink, 900, 'left', a); }
+
+// 배경: 은은한 점 격자 + 떠다니는 빛
+function bgDraw(t) {
+  g.fillStyle = C.bg; g.fillRect(0, 0, W, H);
+  const rg = g.createRadialGradient(W * .72, H * .2, 50, W * .72, H * .2, 1100); rg.addColorStop(0, 'rgba(110,80,255,.22)'); rg.addColorStop(1, 'rgba(110,80,255,0)'); g.fillStyle = rg; g.fillRect(0, 0, W, H);
+  const rg2 = g.createRadialGradient(W * .1, H * .95, 40, W * .1, H * .95, 800); rg2.addColorStop(0, 'rgba(62,224,176,.08)'); rg2.addColorStop(1, 'rgba(62,224,176,0)'); g.fillStyle = rg2; g.fillRect(0, 0, W, H);
+  g.fillStyle = 'rgba(255,255,255,.05)';
+  const off = (t * 12) % 48;
+  for (let x = -48 + off; x < W; x += 48) for (let y = 24; y < H; y += 48) { g.fillRect(x, y, 2, 2); }
+  for (let i = 0; i < 26; i++) { const x = (rnd(i) * W + t * (8 + rnd(i + 9) * 18)) % W, y = (rnd(i + 3) * H + Math.sin(t * .4 + i) * 20); g.beginPath(); g.arc(x, y, 1.5 + rnd(i + 5) * 2.5, 0, 7); g.fillStyle = `rgba(184,164,255,${.08 + rnd(i + 7) * .12})`; g.fill(); }
+}
+
+// 장면 공통 전환: 들어올 때 살짝 확대+페이드, 나갈 때 페이드
+function sceneAlpha(t, a, b) { return cl((t - a) / .45) * cl((b - t) / .4); }
+
+// 휴대폰 화면 속 AI 대화
+function phone(x, y, w, h, t, msgs) {
+  g.save(); card(x, y, w, h, 46, '#0b0918', '#3a3270'); rr(x + 14, y + 14, w - 28, h - 28, 36); g.fillStyle = '#141029'; g.fill();
+  txt('AI 어시스턴트', x + w / 2, y + 62, 26, C.sub, 700, 'center');
+  let yy = y + 120;
+  for (const m of msgs) {
+    const k = eo(ramp(t, m.t, .45)); if (k <= 0) continue;
+    g.save(); g.globalAlpha = k; font(30, 600);
+    const lines = m.s.split('\n'); const tw = Math.max(...lines.map(l => g.measureText(l).width)) + 48, th = lines.length * 42 + 30;
+    const bx = m.me ? x + w - 40 - tw : x + 40;
+    rr(bx, yy + (1 - k) * 20, tw, th, 24); g.fillStyle = m.me ? C.vio : (m.col || '#2a2352'); g.fill();
+    lines.forEach((l, i) => txt(l, bx + 24, yy + (1 - k) * 20 + 36 + i * 42, 30, '#fff', 600));
+    g.restore(); yy += th + 22;
+  }
+  g.restore();
+}
+function typing(x, y, t) { for (let i = 0; i < 3; i++) { const a = .3 + .7 * Math.abs(Math.sin(t * 5 + i * .8)); g.beginPath(); g.arc(x + i * 22, y, 7, 0, 7); g.fillStyle = `rgba(255,255,255,${a})`; g.fill(); } }
+
+// 이미지로만 된 상세페이지(가짜 사진 블록)
+function detailPage(x, y, w, h, t, scan = -1) {
+  card(x, y, w, h, 18, '#f4f1ff', null);
+  const cols = [['#ffd9a8', '#ff9f6b'], ['#c9f2e3', '#5ccfa6'], ['#e2d8ff', '#9c84ff'], ['#ffe9f0', '#ff8fb1'], ['#fff3c4', '#ffcf4d']];
+  let yy = y + 20;
+  for (let i = 0; i < 5; i++) {
+    const bh = (h - 120) / 5; const gr = g.createLinearGradient(x, yy, x + w, yy + bh); gr.addColorStop(0, cols[i][0]); gr.addColorStop(1, cols[i][1]);
+    rr(x + 20, yy, w - 40, bh - 14, 12); g.fillStyle = gr; g.fill();
+    // 사진 안에 박힌 글자(흐릿한 줄)
+    g.fillStyle = 'rgba(40,30,80,.35)'; for (let j = 0; j < 3; j++) g.fillRect(x + 44, yy + 22 + j * 18, (w - 120) * (.4 + rnd(i * 7 + j) * .5), 8);
+    g.beginPath(); g.arc(x + w - 80, yy + bh / 2 - 6, bh * .28, 0, 7); g.fillStyle = 'rgba(255,255,255,.55)'; g.fill();
+    yy += bh;
+  }
+  txt('IMG  IMG  IMG', x + w / 2, y + h - 40, 22, '#9b93c4', 700, 'center');
+  if (scan >= 0) { const sy = y + scan * h; const sg = g.createLinearGradient(0, sy - 60, 0, sy); sg.addColorStop(0, 'rgba(139,108,255,0)'); sg.addColorStop(1, 'rgba(139,108,255,.45)'); g.fillStyle = sg; g.fillRect(x, sy - 60, w, 60); g.fillStyle = '#b8a4ff'; g.fillRect(x - 10, sy - 2, w + 20, 4); }
+}
+
+const S = {};
+// 1. AI에게 묻는 시대
+S.s1 = (t) => {
+  rise('검색창 대신,', 140, 300, 92, .3, t, C.ink, 900);
+  rise('AI에게 묻는다', 140, 410, 92, .7, t, C.vio2, 900);
+  txt('소비자의 제품 탐색이 생성형 AI로 옮겨가고 있습니다', 140, 510, 32, C.sub, 600, 'left', eo(ramp(t, 1.4, .6)));
+  const px = 1180 + (1 - eo(ramp(t, .2, .9))) * 300;
+  phone(px, 120, 560, 860, t, [{ s: '이 두유, 당류 얼마나\n들어 있어?', me: 1, t: 1.6 }]);
+  if (t > 3) typing(px + 80, 400, t);
+};
+// 2. AI가 모른다 + 정보는 이미지 속에
+S.s2 = (t, d) => {
+  const k = eo(ramp(t, 3.6, .9));
+  const px = lerp(1180, 1400, k), sc = lerp(1, .78, k);
+  g.save(); g.translate(px, 120); g.scale(sc, sc);
+  phone(0, 0, 560, 860, t + 10, [{ s: '이 두유, 당류 얼마나\n들어 있어?', me: 1, t: 0 }, { s: '공식 정보를 찾지 못했어요.\n블로그에서는 3g이라고도\n하고, 5g이라고도 해요.', col: '#4a1f33', t: 10.4 }]);
+  g.restore();
+  rise('그런데 AI는', 140, 260, 84, .2, t, C.ink, 900);
+  rise('우리 제품을 모릅니다', 140, 365, 84, .5, t, C.red, 900);
+  // 상세페이지 등장
+  const a2 = eo(ramp(t, 3.6, .8));
+  g.save(); g.globalAlpha = a2; g.translate(0, (1 - a2) * 60);
+  detailPage(140, 470, 420, 520, t);
+  txt('자사몰 상세페이지', 600, 520, 34, C.ink, 800, 'left');
+  txt('영양성분·원재료·알레르기', 600, 575, 30, C.sub, 600);
+  txt('전부 이미지 안에', 600, 620, 30, C.sub, 600);
+  // 자물쇠
+  const lx = 650, ly = 760; g.strokeStyle = C.amber; g.lineWidth = 10; g.beginPath(); g.arc(lx + 50, ly, 34, Math.PI, 0); g.stroke();
+  card(lx, ly, 100, 86, 14, C.amber, null); g.beginPath(); g.arc(lx + 50, ly + 38, 10, 0, 7); g.fillStyle = '#5a3d00'; g.fill();
+  txt('AI가 읽을 수 없음', lx + 140, ly + 44, 36, C.amber, 800);
+  g.restore();
+};
+// 3. 사람 화면 대 AI가 읽는 글자, 0/51
+S.s3 = (t) => {
+  const split = 1 - eo(ramp(t, 3.4, .7));
+  if (split > 0) {
+    g.save(); g.globalAlpha = split;
+    txt('사람이 보는 화면', 430, 170, 38, C.ink, 800, 'center', eo(ramp(t, .2, .5)));
+    detailPage(250, 220, 360, 640, t);
+    txt('AI가 읽는 글자', 1330, 170, 38, C.vio2, 800, 'center', eo(ramp(t, .6, .5)));
+    card(1050, 220, 560, 640, 18, '#120f26', '#3a3270');
+    const tl = ['<html>', '  <img src="detail_01.jpg">', '  <img src="detail_02.jpg">', '  <img src="detail_03.jpg">', '  <img src="detail_04.jpg">', '</html>'];
+    tl.forEach((l, i) => txt(l, 1090, 290 + i * 52, 28, '#7d76a8', 600, 'left', eo(ramp(t, .9 + i * .12, .3))));
+    const zk = back(ramp(t, 1.7, .6));
+    txt('영양 정보 0자', 1330, 720, 64 * zk, C.red, 900, 'center', cl(zk));
+    rise('빈 페이지', 960, 950, 56, 1.6, t, C.ink, 900, 'center');
+    g.restore();
+  }
+  const k = eo(ramp(t, 3.6, .7));
+  if (k > 0) {
+    g.save(); g.globalAlpha = k;
+    rise('식품 제품 페이지 51개 중', 140, 230, 54, 3.7, t, C.sub, 800);
+    rise('영양성분이 글자로 있는 곳', 140, 310, 54, 3.9, t, C.ink, 800);
+    // 51 개의 빈 원
+    for (let i = 0; i < 51; i++) {
+      const cx = 170 + (i % 17) * 58, cy = 470 + Math.floor(i / 17) * 66; const kk = back(ramp(t, 4.2 + i * .035, .35));
+      g.beginPath(); g.arc(cx, cy, 22 * kk, 0, 7); g.lineWidth = 3; g.strokeStyle = '#5b5394'; g.stroke();
+    }
+    const nk = back(ramp(t, 8.9, .6));
+    g.save(); g.translate(1450, 560); g.scale(nk, nk); txt('0', 0, 0, 300, C.red, 900, 'center'); g.restore();
+    txt('/ 51', 1450, 760, 60, C.sub, 800, 'center', cl(nk));
+    foot('보라말 업계 점검(2026-10): 식품 회사 17곳 제품 페이지 51개, 영양 6개 항목 중 3개 이상이 본문 글자로 있는지. 회사명 비공개', t, eo(ramp(t, 5, .5)));
+    g.restore();
+  }
+};
+// 4. 매일유업 공식 제품 가이드 사례
+S.s4 = (t) => {
+  tag('먼저 만들고 검증한 사례', 140, 150, .1, t);
+  rise('매일유업 공식 제품 가이드', 140, 240, 72, .3, t, C.ink, 900);
+  // 브라우저 목업
+  const bk = eo(ramp(t, .6, .8)); g.save(); g.globalAlpha = bk; g.translate(0, (1 - bk) * 50);
+  card(140, 320, 860, 640, 20, '#ffffff', null);
+  rr(140, 320, 860, 60, [20, 20, 0, 0]); g.fillStyle = '#ece8fb'; g.fill();
+  ['#ff6b6b', '#ffc35a', '#3ee0b0'].forEach((c, i) => { g.beginPath(); g.arc(178 + i * 28, 350, 8, 0, 7); g.fillStyle = c; g.fill(); });
+  card(280, 332, 560, 36, 18, '#ffffff', null); txt('productguide.maeil.com', 300, 351, 22, '#5b5394', 700);
+  txt('공식 제품 가이드', 190, 425, 22, '#8b6cff', 800);
+  txt('매일두유 99.9  190mL', 190, 470, 40, '#1a1533', 900);
+  const rows = [['총내용량 190mL 기준', ''], ['열량', '95kcal'], ['당류', '1.8g'], ['나트륨', '130mg'], ['알레르기', '대두 함유'], ['원재료', '원액두유 99.9%, 식염']];
+  rows.forEach((r, i) => { const a = eo(ramp(t, 1.2 + i * .18, .35)); g.save(); g.globalAlpha *= a; g.fillStyle = i % 2 ? '#f7f5ff' : '#ffffff'; g.fillRect(190, 515 + i * 62, 760, 58); txt(r[0], 210, 544 + i * 62, 28, '#4a4470', 700); txt(r[1], 930, 544 + i * 62, 30, '#1a1533', 800, 'right'); g.restore(); });
+  txt('+ 자주 묻는 질문 · 보관 방법 · 섭취 안내', 190, 915, 24, '#8b84b0', 700);
+  g.restore();
+  // 정답률 막대
+  const bx = 1120, by = 330;
+  txt('제품 사실 정답률', bx, by, 36, C.ink, 800, 'left', eo(ramp(t, 4.6, .5)));
+  txt('같은 AI·같은 질문, 넣어 준 자료만 바꾼 시험', bx, by + 48, 24, C.sub, 600, 'left', eo(ramp(t, 4.8, .5)));
+  const bars = [['지금 홈페이지', 21, '#6f6896', 7.0], ['공식 제품 가이드', 99, C.vio, 7.9]];
+  bars.forEach((b, i) => {
+    const y = by + 150 + i * 190, k = eo(ramp(t, b[3], 1.0)); const v = b[1] * k;
+    txt(b[0], bx, y, 30, C.sub, 700, 'left', cl(k * 3));
+    rr(bx, y + 30, 560, 70, 14); g.fillStyle = '#231c4a'; g.fill();
+    if (v > 0) { rr(bx, y + 30, 560 * v / 100, 70, 14); g.fillStyle = b[2]; g.fill(); }
+    txt(Math.round(v) + '%', bx + 560 * v / 100 + 20, y + 66, 56, i ? C.ink : C.sub, 900, 'left', cl(k * 3));
+  });
+  foot('보라말 시험(2026-10): 매일유업 제품 53개, Claude 2종. 가이드를 AI 대화창에 직접 넣었을 때의 최대치이며 실제 AI 검색 답의 보장값이 아님', t, eo(ramp(t, 5, .5)));
+};
+// 5. 네 단계 파이프라인 (m5 단어 시각에 맞춤: 2.24 / 6.16 / 10.32 / 14.64)
+S.s5 = (t) => {
+  const o = VO.m5 - SC[4][1];
+  rise('보라말이 하는 일, 네 단계', 140, 150, 64, .1, t, C.ink, 900);
+  const steps = [
+    { n: '01', h: '공공 데이터 수집', s: ['식약처 식품영양성분 DB', '공공 Open API로 성분 확보'], at: o + 2.1, ic: 'db' },
+    { n: '02', h: 'AI 이미지 분석', s: ['상세페이지 이미지 속', '영양·원재료·알레르기 추출'], at: o + 6.0, ic: 'scan' },
+    { n: '03', h: 'GEO 가공', s: ['AI가 인용하기 좋은 문장', '질문·답, 구조화 데이터'], at: o + 10.2, ic: 'geo' },
+    { n: '04', h: 'AI 전용 사이트 발행', s: ['guide.고객사.co.kr', '검색엔진·AI에 등록'], at: o + 14.5, ic: 'web' },
+  ];
+  const cw = 380, gap = 40, x0 = (W - (cw * 4 + gap * 3)) / 2, y0 = 290, ch = 560;
+  steps.forEach((s, i) => {
+    const k = back(ramp(t, s.at, .55)); const active = t >= s.at && (i == 3 || t < steps[i + 1].at);
+    const x = x0 + i * (cw + gap);
+    if (i > 0) { const ak = eo(ramp(t, s.at - .2, .4)); g.strokeStyle = C.vio; g.lineWidth = 4; g.beginPath(); g.moveTo(x - gap + 6, y0 + ch / 2); g.lineTo(x - gap + 6 + (gap - 12) * ak, y0 + ch / 2); g.stroke(); }
+    if (k <= 0) return;
+    g.save(); g.globalAlpha = cl(k); g.translate(x + cw / 2, y0 + ch / 2); g.scale(.85 + .15 * k, .85 + .15 * k); g.translate(-(x + cw / 2), -(y0 + ch / 2));
+    card(x, y0, cw, ch, 26, active ? '#2a2060' : C.card, active ? C.vio : C.line);
+    txt(s.n, x + 32, y0 + 54, 34, C.vio2, 900);
+    icon(s.ic, x + cw / 2, y0 + 210, t - s.at);
+    txt(s.h, x + cw / 2, y0 + 360, 38, C.ink, 900, 'center');
+    txt(s.s[0], x + cw / 2, y0 + 420, 25, C.sub, 600, 'center'); txt(s.s[1], x + cw / 2, y0 + 458, 25, C.sub, 600, 'center');
+    g.restore();
+  });
+  const fk = eo(ramp(t, o + 15.4, .6));
+  txt('사진 속 정보 → AI가 읽는 공식 정보', W / 2, 950, 40, C.mint, 800, 'center', fk);
+};
+function icon(kind, cx, cy, lt) {
+  g.save(); g.translate(cx, cy);
+  if (kind === 'db') {
+    for (let i = 2; i >= 0; i--) { const y = -50 + i * 44; g.beginPath(); g.ellipse(0, y + 40, 90, 26, 0, 0, 7); g.fillStyle = '#3b2f86'; g.fill(); g.fillStyle = '#4a3aa8'; g.fillRect(-90, y, 180, 40); g.beginPath(); g.ellipse(0, y, 90, 26, 0, 0, 7); g.fillStyle = '#8b6cff'; g.fill(); }
+    for (let i = 0; i < 6; i++) { const p = ((lt * .8 + i / 6) % 1); g.beginPath(); g.arc(-120 + p * 240, -110 + Math.sin(p * 6 + i) * 8, 6, 0, 7); g.fillStyle = `rgba(62,224,176,${1 - p})`; g.fill(); }
+  } else if (kind === 'scan') {
+    card(-80, -100, 160, 200, 12, '#ffe3c2', null); g.fillStyle = 'rgba(80,50,20,.35)'; for (let j = 0; j < 6; j++) g.fillRect(-60, -76 + j * 28, 90 + rnd(j) * 30, 10);
+    const sy = -100 + ((lt * .7) % 1) * 200; g.fillStyle = '#b8a4ff'; g.fillRect(-96, sy - 2, 192, 4);
+    ['95kcal', '대두', '1.8g'].forEach((s, i) => { const a = eo(ramp(lt, .5 + i * .5, .4)); txt(s, 110, -60 + i * 60, 26, C.mint, 800, 'left', a); });
+  } else if (kind === 'geo') {
+    const ls = ['Q. 알레르기 성분은?', 'A. 대두 함유', '{ "@type": "Product" }'];
+    ls.forEach((s, i) => { const a = eo(ramp(lt, i * .45, .4)); card(-150, -100 + i * 72, 300, 56, 12, i == 2 ? '#123a33' : '#2a2352', null); g.globalAlpha = a; txt(s, -130, -72 + i * 72, 23, i == 2 ? C.mint : '#fff', 700); g.globalAlpha = 1; });
+  } else if (kind === 'web') {
+    card(-140, -100, 280, 200, 16, '#ffffff', null); g.fillStyle = '#ece8fb'; g.fillRect(-140, -100, 280, 34);
+    g.fillStyle = '#8b6cff'; g.fillRect(-116, -46, 150, 16); g.fillStyle = '#d7d0f5'; for (let j = 0; j < 4; j++) g.fillRect(-116, -14 + j * 26, 230, 12);
+    for (let i = 0; i < 5; i++) { const p = cl(((lt * .6 + i * .2) % 1.2)); const ang = i * 1.3; const r = 220 * (1 - p); g.beginPath(); g.arc(Math.cos(ang) * r, Math.sin(ang) * r * .7, 7, 0, 7); g.fillStyle = `rgba(62,224,176,${p})`; g.fill(); }
+  }
+  g.restore();
+}
+// 6. 사업 모델: 성적표 → 시범 → 구독
+S.s6 = (t) => {
+  const o = VO.m6 - SC[5][1];
+  rise('파는 방식', 140, 150, 64, .1, t, C.ink, 900);
+  const flow = [['무료', 'AI 성적표', '제품 10개를 AI에 묻고 채점', o + .1], ['90일', '시범', '제품 절반만 먼저 올려 효과 비교', o + 2.0], ['월 구독', '매달 관리', '측정 · 수정 · 신제품 반영', o + 3.7]];
+  flow.forEach((f, i) => {
+    const x = 140 + i * 560, y = 250, k = back(ramp(t, f[3], .5)); if (k <= 0) return;
+    g.save(); g.globalAlpha = cl(k); card(x, y, 500, 230, 24, i == 2 ? '#2a2060' : C.card, i == 2 ? C.vio : C.line);
+    txt(f[0], x + 36, y + 64, 32, i == 2 ? C.mint : C.vio2, 800); txt(f[1], x + 36, y + 128, 52, C.ink, 900); txt(f[2], x + 36, y + 186, 26, C.sub, 600);
+    if (i < 2) txt('→', x + 530, y + 115, 50, C.vio, 900, 'center');
+    g.restore();
+  });
+  const plans = [['스타트', '450', '제품 60개 · 월 1회 측정'], ['코어', '850', '제품 200개 · 월 2회 측정'], ['엔터프라이즈', '별도', '200개 초과 · 주 1회 측정']];
+  plans.forEach((p, i) => {
+    const x = 140 + i * 560, y = 560, k = eo(ramp(t, o + 4.2 + i * .25, .5)); if (k <= 0) return;
+    g.save(); g.globalAlpha = k; g.translate(0, (1 - k) * 30); card(x, y, 500, 300, 24, '#151033', C.line);
+    txt(p[0], x + 36, y + 60, 32, C.sub, 800);
+    if (p[1] === '별도') txt('별도 협의', x + 36, y + 150, 72, C.ink, 900);
+    else { txt('월 ' + p[1], x + 36, y + 150, 84, C.ink, 900); font(84, 900); const w = g.measureText('월 ' + p[1]).width; txt('만 원', x + 46 + w, y + 166, 36, C.sub, 800); }
+    txt(p[2], x + 36, y + 240, 28, C.sub, 600);
+    g.restore();
+  });
+  foot('VAT 별도 · 12개월 계약 · 90일 시범 2,400만 원(품질 약속 미달 시 전액 환불)', t, eo(ramp(t, o + 5, .5)));
+};
+// 7. 3년 계획
+S.s7 = (t) => {
+  rise('3년 계획', 140, 150, 64, .1, t, C.ink, 900);
+  const yrs = [['2027', 1.8, 3], ['2028', 8.3, 8], ['2029', 14.4, 14]];
+  const bx = 220, base = 900, maxH = 560;
+  yrs.forEach((y, i) => {
+    const k = eo(ramp(t, .5 + i * .45, .9)), x = bx + i * 300, h = maxH * y[1] / 14.4 * k;
+    rr(x, base - h, 180, Math.max(h, 1), [16, 16, 0, 0]); const gr = g.createLinearGradient(0, base - h, 0, base); gr.addColorStop(0, i == 2 ? '#a58bff' : '#5b49b8'); gr.addColorStop(1, '#2d2470'); g.fillStyle = gr; g.fill();
+    txt((y[1] * k).toFixed(1) + '억', x + 90, base - h - 40, 40, C.ink, 900, 'center', cl(k * 2));
+    txt(y[0], x + 90, base + 40, 32, C.sub, 800, 'center'); txt('고객 ' + y[2] + '곳', x + 90, base + 80, 26, C.dim, 700, 'center');
+  });
+  const k2 = back(ramp(t, 1.9, .6));
+  g.save(); g.globalAlpha = cl(k2);
+  txt('3년 차 목표', 1260, 330, 40, C.sub, 800);
+  txt('고객사 14곳', 1260, 440, 100, C.ink, 900);
+  txt('매출 14.4억 원', 1260, 570, 100, C.vio2, 900);
+  txt('영업이익 7.4억 원 · 2027년 7월 흑자 전환', 1260, 670, 30, C.sub, 700);
+  g.restore();
+  foot('보라말 재무 모델(가정 포함). 매출은 연간, 고객 수는 연말 기준', t, eo(ramp(t, 1, .5)));
+};
+// 8. 엔딩
+S.s8 = (t) => {
+  const k = eo(ramp(t, .3, .8));
+  txt('AI가 읽어야,', W / 2, 330, 96, C.ink, 900, 'center', k);
+  txt('선택됩니다.', W / 2, 450, 96, C.vio2, 900, 'center', eo(ramp(t, .8, .8)));
+  const lk = back(ramp(t, 1.6, .7)); logo(W / 2 + 40, 650, 110 * Math.max(lk, .01), cl(lk));
+  txt('AI가 읽는 제품 정보 · GEO 구독 서비스', W / 2, 800, 34, C.sub, 700, 'center', eo(ramp(t, 2.2, .6)));
+  txt('이소운 · 이시운', W / 2, 860, 28, C.dim, 700, 'center', eo(ramp(t, 2.5, .6)));
+  // 마지막 페이드 아웃
+  const fo = ramp(t, (END - SC[7][1]) - .7, .7); if (fo > 0) { g.fillStyle = `rgba(0,0,0,${fo})`; g.fillRect(0, 0, W, H); }
+};
+
+// 진행 막대(상단): 지금 어느 이야기인지
+const CHAP = ['문제', '문제', '원인', '사례', '방법', '돈', '계획', ''];
+function progress(t) {
+  if (t > SC[7][1]) return;
+  const labels = ['문제', '원인', '사례', '방법', '구독', '계획']; const idx = [0, 0, 1, 2, 3, 4, 5][SC.findIndex(s => t >= s[1] && t < s[2])] ?? 0;
+  labels.forEach((l, i) => { const x = W - 80 - (labels.length - i) * 120; const on = i === idx; txt(l, x + 60, 64, 22, on ? C.ink : C.dim, on ? 800 : 600, 'center'); g.fillStyle = on ? C.vio : '#2e2660'; g.fillRect(x + 20, 84, 80, 4); });
+}
+
+window.__render = (t) => {
+  g.setTransform(1, 0, 0, 1, 0, 0); bgDraw(t);
+  for (const [id, a, b] of SC) {
+    if (t < a - .01 || t >= b + .4) continue;
+    const al = id === 's8' ? cl((t - a) / .45) : sceneAlpha(t, a, b + .4);
+    g.save(); g.globalAlpha = al; S[id](t - a, b - a); g.restore();
+  }
+  if (t < SC[7][1]) { g.save(); g.globalAlpha = cl(t / .6); logoMark(130, 70, 40); txt('보라말', 165, 72, 30, C.ink, 900); g.restore(); }
+  progress(t);
+};
+window.__ready = document.fonts.load('900 40px P').then(() => Promise.all(['600', '700', '800'].map(w => document.fonts.load(w + ' 40px P')))).then(() => true);
+if (location.search.includes('play')) { window.__ready.then(() => { const t0 = performance.now(); const loop = () => { const t = ((performance.now() - t0) / 1000) % END; __render(t); requestAnimationFrame(loop); }; loop(); }); }
+else if (location.search.includes('t=')) { window.__ready.then(() => __render(parseFloat(location.search.split('t=')[1]))); }
+</script></body></html>
